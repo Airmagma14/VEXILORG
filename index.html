@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#12345a">
+  <meta name="description" content="VEXILORG: uma enciclopédia mundial de bandeiras, países e territórios.">
+  <title>VEXILORG 2.0 | Atlas das Bandeiras</title>
+
+  <style>
+    :root {
+      --navy: #12345a;
+      --blue: #2878b5;
+      --light-blue: #e8f3fc;
+      --white: #ffffff;
+      --background: #f3f7fb;
+      --text: #203247;
+      --muted: #64748b;
+      --border: #dce6ef;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+    }
+
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar {
+      max-width: 1150px;
+      margin: auto;
+      padding: 17px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      color: var(--navy);
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: var(--blue);
+    }
+
+    .version {
+      background: var(--light-blue);
+      color: var(--blue);
+      padding: 5px 9px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    nav {
+      background: var(--navy);
+      overflow-x: auto;
+    }
+
+    .nav-inner {
+      max-width: 1150px;
+      margin: auto;
+      padding: 0 15px;
+      display: flex;
+      gap: 5px;
+    }
+
+    nav button {
+      border: 0;
+      background: transparent;
+      color: white;
+      padding: 15px 13px;
+      font-size: 14px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    nav button:hover,
+    nav button.active {
+      background: var(--blue);
+    }
+
+    main {
+      max-width: 1150px;
+      margin: auto;
+      padding: 25px 22px 50px;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, #12345a, #2878b5);
+      color: white;
+      padding: 38px;
+      border-radius: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "🌐";
+      position: absolute;
+      right: 35px;
+      top: 25px;
+      font-size: 100px;
+      opacity: 0.18;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 43px);
+      margin: 0 0 12px;
+      max-width: 650px;
+    }
+
+    .hero p {
+      line-height: 1.7;
+      max-width: 600px;
+      color: #e6f2ff;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 8px;
+      margin-top: 22px;
+      max-width: 600px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .search-box input {
+      flex: 1;
+      min-width: 0;
+      padding: 14px;
+      border: 0;
+      border-radius: 9px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .search-box button,
+    .primary-button {
+      border: 0;
+      background: #ffffff;
+      color: var(--navy);
+      padding: 13px 18px;
+      border-radius: 9px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 32px 0 17px;
+    }
+
+    .section-heading h2 {
+      color: var(--navy);
+      margin: 0;
+      font-size: 23px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 19px;
+      box-shadow: 0 3px 10px #12345a08;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px #12345a12;
+    }
+
+    .flag {
+      font-size: 42px;
+      line-height: 1.4;
+    }
+
+    .card h3 {
+      color: var(--navy);
+      margin: 9px 0 6px;
+    }
+
+    .card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .card button {
+      margin-top: 8px;
+      background: var(--light-blue);
+      color: var(--navy);
+      border: 0;
+      padding: 9px 12px;
+      border-radius: 7px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .featured {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      margin-top: 28px;
+      padding: 23px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .featured-flag {
+      font-size: 75px;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .featured h2 {
+      color: var(--navy);
+      margin-top: 0;
+    }
+
+    .featured p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .featured button {
+      background: var(--blue);
+      color: white;
+      border: 0;
+      padding: 11px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-bottom: 18px;
+    }
+
+    .filters button {
+      background: white;
+      color: var(--navy);
+      border: 1px solid var(--border);
+      padding: 9px 13px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .filters button.active {
+      background: var(--navy);
+      color: white;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      color: var(--muted);
+    }
+
+    footer {
+      background: var(--navy);
+      color: #d9e8f7;
+      text-align: center;
+      padding: 25px 15px;
+      line-height: 1.8;
+      font-size: 13px;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    @media (max-width: 800px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero {
+        padding: 27px;
+      }
+
+      .hero::after {
+        right: 10px;
+        font-size: 65px;
+      }
+
+      .featured {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        padding: 14px;
+      }
+
+      main {
+        padding: 18px 14px 35px;
+      }
+
+      .search-box {
+        flex-direction: column;
+      }
+
+      .hero::after {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="topbar">
+      <div class="logo">VEXIL<span>ORG</span></div>
+      <div class="version">VERSÃO 2.0</div>
+    </div>
+
+    <nav>
+      <div class="nav-inner">
+        <button class="active" data-view="inicio">🏠 Início</button>
+        <button data-view="paises">🌍 Países</button>
+        <button data-view="territorios">🏝️ Territórios</button>
+        <button data-view="brasil">🇧🇷 Brasil</button>
+        <button data-view="quiz">🧠 Quiz</button>
+        <button data-view="favoritos">⭐ Favoritos</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>O mundo hasteia suas cores.</h1>
+      <p>
+        Explore bandeiras, descubra países e territórios e conheça
+        os símbolos que representam povos de todo o planeta.
+      </p>
+
+      <form class="search-box" id="search-form">
+        <input
+          id="search-input"
+          type="search"
+          placeholder="Pesquisar país, território ou estado..."
+          aria-label="Pesquisar bandeiras"
+        >
+        <button type="submit">🔎 Pesquisar</button>
+      </form>
+    </section>
+
+    <section id="content">
+      <div class="section-heading">
+        <h2>🧭 Explore o atlas</h2>
+        <p>Escolha uma categoria para começar.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="flag">🌍</div>
+          <h3>Países do mundo</h3>
+          <p>Explore bandeiras nacionais e descubra novos lugares.</p>
+          <button data-open="paises">Explorar países →</button>
+        </article>
+
+        <article class="card">
+          <div class="flag">🏝️</div>
+          <h3>Territórios</h3>
+          <p>Conheça ilhas, dependências e regiões especiais.</p>
+          <button data-open="territorios">Explorar territórios →</button>
+        </article>
+
+        <article class="card">
+          <div class="flag">🇧🇷</div>
+          <h3>Brasil</h3>
+          <p>Descubra as bandeiras dos estados brasileiros.</p>
+          <button data-open="brasil">Explorar Brasil →</button>
+        </article>
+
+        <article class="card">
+          <div class="flag">🧠</div>
+          <h3>Desafio vexilológico</h3>
+          <p>Teste sua memória e seus conhecimentos de bandeiras.</p>
+          <button data-open="quiz">Jogar quiz →</button>
+        </article>
+      </div>
+
+      <section class="featured">
+        <div class="featured-flag">🇨🇼</div>
+        <div>
+          <h2>⭐ Bandeira em destaque: Curaçao</h2>
+          <p>
+            Uma bandeira azul com uma faixa amarela e duas estrelas
+            brancas. Curaçao é uma ilha do Caribe, parte do Reino
+            dos Países Baixos.
+          </p>
+          <button data-open="territorios">Explorar territórios</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <strong>VEXILORG 2.0</strong><br>
+    Enciclopédia mundial das bandeiras.<br>
+    Um atlas de cores, símbolos e identidades.
+  </footer>
+
+  <script>
+    const items = [
+      { name: "Brasil", flag: "🇧🇷", type: "paises", desc: "América do Sul" },
+      { name: "Argentina", flag: "🇦🇷", type: "paises", desc: "América do Sul" },
+      { name: "Uruguai", flag: "🇺🇾", type: "paises", desc: "América do Sul" },
+      { name: "Chile", flag: "🇨🇱", type: "paises", desc: "América do Sul" },
+      { name: "México", flag: "🇲🇽", type: "paises", desc: "América do Norte" },
+      { name: "Estados Unidos", flag: "🇺🇸", type: "paises", desc: "América do Norte" },
+      { name: "Canadá", flag: "🇨🇦", type: "paises", desc: "América do Norte" },
+      { name: "Portugal", flag: "🇵🇹", type: "paises", desc: "Europa" },
+      { name: "Espanha", flag: "🇪🇸", type: "paises", desc: "Europa" },
+      { name: "França", flag: "🇫🇷", type: "paises", desc: "Europa" },
+      { name: "Itália", flag: "🇮🇹", type: "paises", desc: "Europa" },
+      { name: "Alemanha", flag: "🇩🇪", type: "paises", desc: "Europa" },
+      { name: "Japão", flag: "🇯🇵", type: "paises", desc: "Ásia" },
+      { name: "China", flag: "🇨🇳", type: "paises", desc: "Ásia" },
+      { name: "Coreia do Sul", flag: "🇰🇷", type: "paises", desc: "Ásia" },
+      { name: "Índia", flag: "🇮🇳", type: "paises", desc: "Ásia" },
+      { name: "Austrália", flag: "🇦🇺", type: "paises", desc: "Oceania" },
+      { name: "Nova Zelândia", flag: "🇳🇿", type: "paises", desc: "Oceania" },
+      { name: "África do Sul", flag: "🇿🇦", type: "paises", desc: "África" },
+      { name: "Moçambique", flag: "🇲🇿", type: "paises", desc: "África" },
+      { name: "Angola", flag: "🇦🇴", type: "paises", desc: "África" },
+      { name: "Nigéria", flag: "🇳🇬", type: "paises", desc: "África" },
+      { name: "Egito", flag: "🇪🇬", type: "paises", desc: "África" },
+      { name: "Curaçao", flag: "🇨🇼", type: "territorios", desc: "Caribe" },
+      { name: "Aruba", flag: "🇦🇼", type: "territorios", desc: "Caribe" },
+      { name: "Groenlândia", flag: "🇬🇱", type: "territorios", desc: "América do Norte" },
+      { name: "Porto Rico", flag: "🇵🇷", type: "territorios", desc: "Caribe" },
+      { name: "Hong Kong", flag: "🇭🇰", type: "territorios", desc: "Ásia" },
+      { name: "Macau", flag: "🇲🇴", type: "territorios", desc: "Ásia" },
+      { name: "Guadalupe", flag: "🇬🇵", type: "territorios", desc: "Caribe" },
+      { name: "Pernambuco", flag: "🏳️", type: "brasil", desc: "Nordeste do Brasil" },
+      { name: "Paraná", flag: "🏳️", type: "brasil", desc: "Sul do Brasil" },
+      { name: "São Paulo", flag: "🏳️", type: "brasil", desc: "Sudeste do Brasil" },
+      { name: "Rio de Janeiro", flag: "🏳️", type: "brasil", desc: "Sudeste do Brasil" },
+      { name: "Bahia", flag: "🏳️", type: "brasil", desc: "Nordeste do Brasil" },
+      { name: "Amazonas", flag: "🏳️", type: "brasil", desc: "Norte do Brasil" },
+      { name: "Maranhão", flag: "🏳️", type: "brasil", desc: "Nordeste do Brasil" },
+      { name: "Rio Grande do Sul", flag: "🏳️", type: "brasil", desc: "Sul do Brasil" },
+      { name: "Mato Grosso", flag: "🏳️", type: "brasil", desc: "Centro-Oeste do Brasil" }
+    ];
+
+    const content = document.getElementById("content");
+    const searchInput = document.getElementById("search-input");
+    let currentView = "inicio";
+    let favorites = JSON.parse(localStorage.getItem("vexilorg-favorites") || "[]");
+
+    function normalize(text) {
+      return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
+
+    function cardHTML(item) {
+      const saved = favorites.includes(item.name);
+      return `
+        <article class="card">
+          <div class="flag">${item.flag}</div>
+          <h3>${item.name}</h3>
+          <p>${item.desc}</p>
+          <button data-favorite="${item.name}">
+            ${saved ? "⭐ Remover favorito" : "☆ Adicionar favorito"}
+          </button>
+        </article>
+      `;
+    }
+
+    function renderItems(title, list) {
+      content.innerHTML = `
+        <div class="section-heading">
+          <h2>${title}</h2>
+          <p>${list.length} resultado(s)</p>
+        </div>
+        <div class="grid">
+          ${list.length ? list.map(cardHTML).join("") :
+            '<div class="empty">Nenhuma bandeira encontrada. Tente outra pesquisa!</div>'}
+        </div>
+      `;
+    }
+
+    function showView(view) {
+      currentView = view;
+      document.querySelectorAll("nav button").forEach(button => {
+        button.classList.toggle("active", button.dataset.view === view);
+      });
+
+      searchInput.value = "";
+
+      if (view === "inicio") {
+        location.reload();
+        return;
+      }
+
+      if (view === "quiz") {
+        showQuiz();
+        return;
+      }
+
+      if (view === "favoritos") {
+        renderItems("⭐ Minhas favoritas",
+          items.filter(item => favorites.includes(item.name)));
+        return;
+      }
+
+      const titles = {
+        paises: "🌍 Países do mundo",
+        territorios: "🏝️ Territórios",
+        brasil: "🇧🇷 Bandeiras do Brasil"
+      };
+
+      renderItems(titles[view], items.filter(item => item.type === view));
+    }
+
+    function showQuiz() {
+      const questions = [
+        { question: "Qual é a bandeira de Curaçao?", options: ["🇨🇼", "🇦🇼", "🇵🇷"], answer: "🇨🇼", name: "Curaçao" },
+        { question: "Qual é a bandeira do Japão?", options: ["🇨🇳", "🇯🇵", "🇰🇷"], answer: "🇯🇵", name: "Japão" },
+        { question: "Qual é a bandeira de Moçambique?", options: ["🇦🇴", "🇲🇿", "🇿🇦"], answer: "🇲🇿", name: "Moçambique" },
+        { question: "Qual é a bandeira da Argentina?", options: ["🇺🇾", "🇨🇱", "🇦🇷"], answer: "🇦🇷", name: "Argentina" },
+        { question: "Qual é a bandeira de Portugal?", options: ["🇪🇸", "🇵🇹", "🇮🇹"], answer: "🇵🇹", name: "Portugal" }
+      ];
+
+      let index = 0;
+      let score = 0;
+
+      function drawQuestion() {
+        if (index >= questions.length) {
+          content.innerHTML = `
+            <div class="card">
+              <h2>🏆 Quiz concluído!</h2>
+              <p>Você acertou ${score} de ${questions.length} perguntas.</p>
+              <button id="restart-quiz">Jogar novamente</button>
+            </div>
+          `;
+          document.getElementById("restart-quiz").onclick = showQuiz;
+          return;
+        }
+
+        const q = questions[index];
+        content.innerHTML = `
+          <div class="card">
+            <p>Pergunta ${index + 1} de ${questions.length}</p>
+            <h2>${q.question}</h2>
+            <div class="grid">
+              ${q.options.map(option => `
+                <button class="card" data-answer="${option}"
+                  style="font-size:48px;cursor:pointer">${option}</button>
+              `).join("")}
+            </div>
+            <p id="quiz-feedback" aria-live="polite"></p>
+          </div>
+        `;
+
+        content.querySelectorAll("[data-answer]").forEach(button => {
+          button.onclick = () => {
+            const selected = button.dataset.answer;
+            const feedback = document.getElementById("quiz-feedback");
+
+            if (selected === q.answer) {
+              score++;
+              feedback.textContent = "✅ Correto! Era " + q.name + ".";
+            } else {
+              feedback.textContent = "❌ A resposta era " + q.name + ".";
+            }
+
+            content.querySelectorAll("[data-answer]").forEach(b => b.disabled = true);
+
+            const next = document.createElement("button");
+            next.className = "primary-button";
+            next.style.background = "var(--blue)";
+            next.style.color = "white";
+            next.textContent = index === questions.length - 1 ? "Ver resultado" : "Próxima pergunta";
+            next.onclick = () => {
+              index++;
+              drawQuestion();
+            };
+            feedback.after(next);
+          };
+        });
+      }
+
+      drawQuestion();
+    }
+
+    document.querySelectorAll("[data-view]").forEach(button => {
+      button.addEventListener("click", () => showView(button.dataset.view));
+    });
+
+    document.addEventListener("click", event => {
+      const openButton = event.target.closest("[data-open]");
+      if (openButton) {
+        showView(openButton.dataset.open);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      const favoriteButton = event.target.closest("[data-favorite]");
+      if (favoriteButton) {
+        const name = favoriteButton.dataset.favorite;
+
+        if (favorites.includes(name)) {
+          favorites = favorites.filter(item => item !== name);
+        } else {
+          favorites.push(name);
+        }
+
+        localStorage.setItem("vexilorg-favorites", JSON.stringify(favorites));
+        showView(currentView);
+      }
+    });
+
+    document.getElementById("search-form").addEventListener("submit", event => {
+      event.preventDefault();
+      const query = normalize(searchInput.value.trim());
+
+      if (!query) {
+        showView("inicio");
+        return;
+      }
+
+      currentView = "pesquisa";
+      document.querySelectorAll("nav button").forEach(button => button.classList.remove("active"));
+
+      renderItems("🔎 Resultados da pesquisa",
+        items.filter(item => normalize(item.name).includes(query)));
+    });
+  </script>
+</body>
+</html>

@@ -526,7 +526,88 @@
         </div>
       `;
     }
+   function showDetails(name) {
+  const item = items.find(item => item.name === name);
 
+  if (!item) return;
+
+  const capitals = {
+    "Brasil": "Brasília",
+    "Argentina": "Buenos Aires",
+    "Uruguai": "Montevidéu",
+    "Chile": "Santiago",
+    "México": "Cidade do México",
+    "Estados Unidos": "Washington, D.C.",
+    "Canadá": "Ottawa",
+    "Portugal": "Lisboa",
+    "Espanha": "Madri",
+    "França": "Paris",
+    "Itália": "Roma",
+    "Alemanha": "Berlim",
+    "Japão": "Tóquio",
+    "China": "Pequim",
+    "Coreia do Sul": "Seul",
+    "Índia": "Nova Délhi",
+    "Austrália": "Camberra",
+    "Nova Zelândia": "Wellington",
+    "África do Sul": "Pretória, Cidade do Cabo e Bloemfontein",
+    "Moçambique": "Maputo",
+    "Angola": "Luanda",
+    "Nigéria": "Abuja",
+    "Egito": "Cairo",
+    "Curaçao": "Willemstad",
+    "Aruba": "Oranjestad",
+    "Groenlândia": "Nuuk",
+    "Porto Rico": "San Juan",
+    "Hong Kong": "Hong Kong",
+    "Macau": "Macau",
+    "Guadalupe": "Basse-Terre"
+  };
+
+  const regions = {
+    paises: "País",
+    territorios: "Território",
+    brasil: "Estado brasileiro"
+  };
+
+  content.innerHTML = `
+    <div class="card">
+      <div class="flag" style="font-size:90px">
+        ${item.flag}
+      </div>
+
+      <h2>${item.name}</h2>
+
+      <p><strong>Categoria:</strong> ${regions[item.type]}</p>
+
+      <p><strong>Região:</strong> ${item.desc}</p>
+
+      <p><strong>Capital:</strong>
+        ${capitals[item.name] || "Informação a ser adicionada"}
+      </p>
+
+      <h3>Sobre a bandeira</h3>
+
+      <p>
+        Esta é a bandeira que representa ${item.name}.
+        Explore seus símbolos, suas cores e sua história
+        para conhecer melhor essa região.
+      </p>
+
+      <button class="primary-button"
+        style="background:var(--blue);color:white"
+        id="back-to-list">
+        ← Voltar
+      </button>
+    </div>
+  `;
+
+  document.getElementById("back-to-list").onclick = () => {
+    showView(item.type);
+  };
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
     function showView(view) {
       currentView = view;
       document.querySelectorAll("nav button").forEach(button => {
@@ -642,6 +723,12 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
+     const detailsButton = event.target.closest("[data-details]");
+
+if (detailsButton) {
+  showDetails(detailsButton.dataset.details);
+  return;
+}
       const favoriteButton = event.target.closest("[data-favorite]");
       if (favoriteButton) {
         const name = favoriteButton.dataset.favorite;
